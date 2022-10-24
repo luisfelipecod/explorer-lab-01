@@ -18,6 +18,18 @@ form label {
   text-transform: uppercase;
   color: #e1e1e6;
 }
+form p {
+  background-color: #323238;
+  padding: 9px;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+form #required-symbol {
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  color: #e62020;
+}
 
 form input {
   background: #121214;
@@ -30,6 +42,10 @@ form input {
 
   color: white;
   text-transform: uppercase;
+}
+
+form input:focus {
+  outline: 2px solid #42d3ff;
 }
 
 form .flex {

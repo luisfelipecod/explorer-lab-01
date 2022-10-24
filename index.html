@@ -133,25 +133,34 @@
       </section>
 
       <form action="">
+        <p><span id="required-symbol">* </span>- Campo Obrigatório</p>
         <div class="input-wrapper">
-          <label for="card-number">Número do cartão</label>
-          <input id="card-number" />
+          <label for="card-number"
+            >Número do cartão<span id="required-symbol"> *</span></label
+          >
+          <input id="card-number" required />
         </div>
 
         <div class="input-wrapper">
-          <label for="card-holder">Nome do titular</label>
-          <input id="card-holder" />
+          <label for="card-holder"
+            >Nome do titular<span id="required-symbol"> *</span></label
+          >
+          <input id="card-holder" required />
         </div>
 
         <div class="flex">
           <div class="input-wrapper">
-            <label for="expiration-date">Expiração</label>
-            <input id="expiration-date" />
+            <label for="expiration-date"
+              >Expiração<span id="required-symbol"> *</span></label
+            >
+            <input id="expiration-date" required />
           </div>
 
           <div class="input-wrapper">
-            <label for="security-code">CVC</label>
-            <input id="security-code" />
+            <label for="security-code"
+              >CVC<span id="required-symbol"> *</span></label
+            >
+            <input id="security-code" required />
           </div>
         </div>
 
