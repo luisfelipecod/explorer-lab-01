@@ -1,10 +1,26 @@
 import "./css/index.css"
 import IMask from "imask"
+import {
+  isANameValid,
+  isADateValid,
+  isASecurityCodeValid,
+  resetErrorMessages,
+  isACardnumberValid,
+} from "./validations"
 
 const ccbgColor01 = document.querySelector(".cc-bg svg > g g:nth-child(1) path")
 const ccbgColor02 = document.querySelector(".cc-bg svg > g g:nth-child(2) path")
 
 const ccLogo = document.querySelector(".cc-logo span:nth-child(2) img")
+
+function getInputs() {
+  const cardNumber = document.querySelector("#card-number")
+  const cardHolder = document.querySelector("#card-holder")
+  const expirationDate = document.querySelector("#expiration-date")
+  const securityCode = document.querySelector("#security-code")
+
+  return { securityCode, cardNumber, cardHolder, expirationDate }
+}
 
 function setCardType(type) {
   const colors = {
@@ -21,14 +37,14 @@ function setCardType(type) {
 setCardType("default")
 globalThis.setCardType = setCardType
 
-const securityCode = document.querySelector("#security-code")
+const { securityCode } = getInputs()
 const securityCodePattern = {
   mask: "0000",
 }
 
 const securityCodeMasked = IMask(securityCode, securityCodePattern)
 
-const expirationDate = document.querySelector("#expiration-date")
+const { expirationDate } = getInputs()
 const expirationDatePattern = {
   mask: "MM{/}YY",
   blocks: {
@@ -47,7 +63,7 @@ const expirationDatePattern = {
 }
 const expirationDateMasked = IMask(expirationDate, expirationDatePattern)
 
-const cardNumber = document.querySelector("#card-number")
+const { cardNumber } = getInputs()
 const cardNumberPattern = {
   mask: [
     {
@@ -78,13 +94,12 @@ const cardNumberPattern = {
 const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
 
 const addButton = document.querySelector("#add-card")
-addButton.addEventListener("click", () => alert("Cartão Adicionado!"))
 
-document.querySelector("form").addEventListener("submit", (event) => {
-  event.preventDefault()
+addButton.addEventListener("click", () => {
+  validation()
 })
 
-const cardHolder = document.querySelector("#card-holder")
+const { cardHolder } = getInputs()
 cardHolder.addEventListener("input", () => {
   const ccHolder = document.querySelector(".cc-holder .value")
 
@@ -122,3 +137,23 @@ function updateExpirationDate(date) {
 
   ccExpiration.innerText = date.length === 0 ? "02/32" : date
 }
+
+function validation() {
+  const inputs = getInputs()
+  const cardtype = cardNumberMasked.masked.currentMask.cardtype
+
+  if (
+    isACardnumberValid(inputs.cardNumber) &&
+    isANameValid(inputs.cardHolder) &&
+    isADateValid(inputs.expirationDate) &&
+    isASecurityCodeValid(inputs.securityCode, cardtype)
+  ) {
+    resetErrorMessages(inputs)
+    alert("Sucesso")
+  }
+  return
+}
+
+document.querySelector("form").addEventListener("submit", (event) => {
+  event.preventDefault()
+})
